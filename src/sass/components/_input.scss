@@ -1,9 +1,12 @@
 .input {
     display: flex;
-    width: 700px;
-    height: 200px;
-    margin: 10px auto 10px;
-    padding: 10px;
-    font-size: 18px;
-    color: #444444;
+    width: 70*$spacer;
+    height: 20*$spacer;
+    margin: $spacer auto $spacer;
+    padding: $spacer;
+    font-size: 1.8*$spacer;
+    color: $color-input;
+    resize: none;
+    overflow: auto;
+    border-radius: 0.5*$spacer;
 }
