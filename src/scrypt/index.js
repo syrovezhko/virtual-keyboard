@@ -18,58 +18,87 @@ for(let i = 0; i < content.length; i+=4) {
     addChild(keyboardRow);
     for(let j = 0; j < content[i].length; j++){
         let keyClass = '';
-        switch(content[i][j]){
-            case '`':
-                keyClass = 'Backquote';
-                break;
-            case '-':
-                keyClass = 'Minus';
-                break;
-            case '=':
-                keyClass = 'Equal';
-                break;
-            case '[':
-                keyClass = 'BracketLeft';
-                break;
-            case ']':
-                keyClass = 'BracketRight';
-                break;
-            case `\\`:
-                keyClass = 'Backslash';
-                break;
-            case ';':
-                keyClass = 'Semicolon';
-                break;
-            case `'`:
-                keyClass = 'Quote';
-                break;
-            case ',':
-                keyClass = 'Comma';
-                break;
-            case '.':
-                keyClass = 'Period';
-                break;
-            case '/':
-                keyClass = 'Slash';
-                break;
-            case '▲':
-                keyClass = 'ArrowUp';
-                break;
-            case ' ':
-                keyClass = 'Space';
-                break;
-            case '◄':
-                keyClass = 'ArrowLeft';
-                break;
-            case '▼':
-                keyClass = 'ArrowDown';
-                break;
-            case '►':
-                keyClass = 'ArrowRight';
-                break;
-            default:
-                keyClass = content[i][j];
-                break;
+        if ((Number(content[i][j]) || Number(content[i][j])===0) && content[i][j] !== ' '){
+            keyClass = `Digit${content[i][j]}`;
+            console.log(keyClass);
+        } else {
+            switch(content[i][j]){
+                case '`':
+                    keyClass = 'Backquote';
+                    break;
+                case '-':
+                    keyClass = 'Minus';
+                    break;
+                case '=':
+                    keyClass = 'Equal';
+                    break;
+                case '[':
+                    keyClass = 'BracketLeft';
+                    break;
+                case ']':
+                    keyClass = 'BracketRight';
+                    break;
+                case `\\`:
+                    keyClass = 'Backslash';
+                    break;
+                case ';':
+                    keyClass = 'Semicolon';
+                    break;
+                case `'`:
+                    keyClass = 'Quote';
+                    break;
+                case ',':
+                    keyClass = 'Comma';
+                    break;
+                case '.':
+                    keyClass = 'Period';
+                    break;
+                case '/':
+                    keyClass = 'Slash';
+                    break;
+                case '▲':
+                    keyClass = 'ArrowUp';
+                    break;
+                case ' ':
+                    keyClass = 'Space';
+                    break;
+                case '◄':
+                    keyClass = 'ArrowLeft';
+                    break;
+                case '▼':
+                    keyClass = 'ArrowDown';
+                    break;
+                case '►':
+                    keyClass = 'ArrowRight';
+                    break;
+                case 'CapsLock':
+                    keyClass = 'CapsLock';
+                    break;
+                case 'Tab':
+                    keyClass = 'Tab';
+                    break;
+                case 'BackSpace':
+                    keyClass = 'BackSpace';
+                    break;
+                case 'Enter':
+                    keyClass = 'Enter';
+                    break;
+                case 'Shift':
+                    keyClass = 'Shift';
+                    break;
+                case 'Ctrl':
+                    keyClass = 'Ctrl';
+                    break;
+                case 'Win':
+                    keyClass = 'Win';
+                    break;
+                case 'Alt':
+                    keyClass = 'Alt';
+                    break;
+                default:
+                    keyClass = `Key${content[i][j].toUpperCase()}`;
+                    break;
+            }
         }
         let key = {
             parent: `row${i/4 + 1}`,

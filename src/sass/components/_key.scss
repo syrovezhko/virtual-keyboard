@@ -26,7 +26,7 @@
 .Space{
     flex-grow: 1;
 }
-.BackSpace, .CapsLock, .ShiftLeft, .ShiftRight, .Enter, .Tab, .Ctrl, .Win, .ArrowUp, .ArrowDown, .ArrowLeft, .ArrowUp, .ArrowRight{
+.BackSpace, .CapsLock, .Alt, .Shift, .Enter, .Tab, .Ctrl, .Win, .ArrowUp, .ArrowDown, .ArrowLeft, .ArrowUp, .ArrowRight{
     background: $color-keyboard;
 }
 .hidden {
