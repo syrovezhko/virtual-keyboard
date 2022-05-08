@@ -20,3 +20,28 @@ export let content = [
     ['Ctrl', 'Win', 'Alt', ' ', 'Alt', '◄', '▼', '►', 'Ctrl'],
     ['Ctrl', 'Win', 'Alt', ' ', 'Alt', '◄', '▼', '►', 'Ctrl']
 ]
+
+export let serviceKeys  =  [
+                            'CapsLock',
+                            'BackSpace',
+                            'Shift',
+                            'Control',
+                            'Win',
+                            'Alt',
+                            'Escape',
+                            'Unidentified',
+                            'F1',
+                            'F2',
+                            'F3',
+                            'F4',
+                            'F5',
+                            'F6',
+                            'F7',
+                            'F8',
+                            'F9',
+                            'F10',
+                            'F11',
+                            'F12',
+                            'Delete',
+                            'Meta'
+                        ]

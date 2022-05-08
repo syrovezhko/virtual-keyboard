@@ -3,6 +3,7 @@ import {container} from './modules/elements/container.js'
 import {addChild} from './modules/methods/addChild.js'
 import {title, inputBlockRow, keyboardBody, description, language} from './modules/elements/layout.js'
 import {content} from './modules/elements/content.js'
+import {addSymbolFromKey} from './modules/methods/addSymbol.js'
 
 container()
 addChild(title)
@@ -20,7 +21,6 @@ for(let i = 0; i < content.length; i+=4) {
         let keyClass = '';
         if ((Number(content[i][j]) || Number(content[i][j])===0) && content[i][j] !== ' '){
             keyClass = `Digit${content[i][j]}`;
-            console.log(keyClass);
         } else {
             switch(content[i][j]){
                 case '`':
@@ -78,7 +78,7 @@ for(let i = 0; i < content.length; i+=4) {
                     keyClass = 'Tab';
                     break;
                 case 'BackSpace':
-                    keyClass = 'BackSpace';
+                    keyClass = 'Backspace';
                     break;
                 case 'Enter':
                     keyClass = 'Enter';
@@ -191,3 +191,11 @@ for(let i = 0; i < content.length; i+=4) {
 }
 addChild(description)
 addChild(language)
+
+document.addEventListener('keydown', function (event){
+    event.preventDefault();
+    addSymbolFromKey(event.key);
+    // console.log(event.key);
+})
+
+
