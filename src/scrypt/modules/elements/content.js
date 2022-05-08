@@ -23,7 +23,6 @@ export let content = [
 
 export let serviceKeys  =  [
                             'CapsLock',
-                            'BackSpace',
                             'Shift',
                             'Control',
                             'Win',

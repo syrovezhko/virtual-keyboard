@@ -4,6 +4,7 @@ import {addChild} from './modules/methods/addChild.js'
 import {title, inputBlockRow, keyboardBody, description, language} from './modules/elements/layout.js'
 import {content} from './modules/elements/content.js'
 import {addSymbolFromKey} from './modules/methods/addSymbol.js'
+import {displayKeyByPhysicalKeyboard, hideKeyByPhysicalKeyboard} from './modules/methods/displayKey.js'
 
 container()
 addChild(title)
@@ -87,10 +88,10 @@ for(let i = 0; i < content.length; i+=4) {
                     keyClass = 'Shift';
                     break;
                 case 'Ctrl':
-                    keyClass = 'Ctrl';
+                    keyClass = 'Control';
                     break;
                 case 'Win':
-                    keyClass = 'Win';
+                    keyClass = 'MetaLeft';
                     break;
                 case 'Alt':
                     keyClass = 'Alt';
@@ -195,7 +196,11 @@ addChild(language)
 document.addEventListener('keydown', function (event){
     event.preventDefault();
     addSymbolFromKey(event.key);
+    displayKeyByPhysicalKeyboard(event.code);
     // console.log(event.key);
 })
 
-
+document.addEventListener('keyup', function (event){
+    hideKeyByPhysicalKeyboard(event.code);
+    // console.log(event.key);
+})
