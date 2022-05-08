@@ -4,7 +4,7 @@ import {addChild} from './modules/methods/addChild.js'
 import {title, inputBlockRow, keyboardBody, description, language} from './modules/elements/layout.js'
 import {content} from './modules/elements/content.js'
 import {addSymbolFromKey} from './modules/methods/addSymbol.js'
-import {displayKeyByPhysicalKeyboard, hideKeyByPhysicalKeyboard} from './modules/methods/displayKey.js'
+import {displayKeyByPhysicalKeyboard, hideKeyByPhysicalKeyboard, displaySymbol, switchLang} from './modules/methods/displayKey.js'
 
 container()
 addChild(title)
@@ -119,7 +119,7 @@ for(let i = 0; i < content.length; i+=4) {
         let rus = {
             parent: `${keyClass}`,
             tag: 'span',
-            class: `rus, rus-${keyClass} hidden`,
+            class: `rus rus-${keyClass} hidden`,
             content: ''
         };
         let eng = {
@@ -192,15 +192,59 @@ for(let i = 0; i < content.length; i+=4) {
 }
 addChild(description)
 addChild(language)
+let i = 0
+let arr = [
+    [0, 1, 2, 3],
+    [4, 5, 6, 7]
+]
+let lang = 1
+let isUp = 0
+let index = arr[lang][isUp]
 
+
+let keysPressed = {};
 document.addEventListener('keydown', function (event){
+    keysPressed[event.code] = true;
     event.preventDefault();
-    addSymbolFromKey(event.key);
+    // console.log('index in main =', lang, isUp)
+    if (keysPressed['ShiftLeft'] && event.code == 'AltLeft' || keysPressed['AltLeft'] && event.code == 'ShiftLeft') {
+        lang++;
+        lang %= 2;
+        // console.log(`lang is ${lang === 1 ? "rus" : "eng"}`)
+    }
+    if (event.code === 'CapsLock') {
+        console.log('CapsLock')
+        let caps = document.getElementsByClassName('CapsLock')[0];
+        if (!caps.matches('.active')) {
+            // console.log('CapsLock active')
+            isUp = 2;
+        } 
+        else {
+            // console.log('CapsLock passive')
+            isUp = 0
+        }
+    }
+    if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+        isUp++;
+        isUp %= 2;
+    }
+    addSymbolFromKey(event.key, event.code, arr[lang][isUp]);
     displayKeyByPhysicalKeyboard(event.code);
-    // console.log(event.key);
+    switchLang(event.code, arr[lang][isUp]);
+    console.log(arr[lang][isUp]);
+    displaySymbol(event.code, arr[lang][isUp]);
+
 })
 
 document.addEventListener('keyup', function (event){
+    if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+        isUp++;
+        isUp %= 2;
+    }
+    displaySymbol(event.code, arr[lang][isUp]);
+    delete keysPressed[event.code];
     hideKeyByPhysicalKeyboard(event.code);
-    // console.log(event.key);
+    
 })
+
+
