@@ -1,5 +1,3 @@
-import { content } from "./content"
-
 export let title = {
     parent: 'container',
     tag: 'h1',

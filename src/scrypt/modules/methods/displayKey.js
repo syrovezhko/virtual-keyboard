@@ -22,9 +22,8 @@ export function hideKeyByPhysicalKeyboard (key) {
     }
 }
 
-export function switchLang (key, index) {
+export function switchLang (index) {
     let lang = Math.floor(index/4);
-    // console.log(`lang is ${lang === 0 ? "rus" : "eng"}`);
     let rus = document.getElementsByClassName('rus');
     let eng = document.getElementsByClassName('eng');
 

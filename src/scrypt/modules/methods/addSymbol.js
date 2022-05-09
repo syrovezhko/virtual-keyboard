@@ -22,6 +22,4 @@ export function addSymbolFromKey(keyCode, keyClass, index) {
     } else if (!serviceKeys.includes(keyCode)){
         inputField.value += inputKey.textContent[index];
     }
-    // console.log(inputKey.textContent[index])
-    // console.log('index in function =', index)
 }
