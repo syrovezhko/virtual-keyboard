@@ -1,0 +1,38 @@
+.key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4*$spacer;
+    height: 4*$spacer;
+    margin-left: 0.6*$spacer;
+    font-weight: 500;
+    line-height: 4*$spacer;
+    color: $color-key-text;
+    background: $color-keyboard*2;
+    border-radius: 0.3*$spacer;
+    cursor: pointer;
+    user-select: none;
+    transition: border-radius 0.3s, background-color 0.3s;
+    &:hover {
+        background: $color-key-hover;
+    }
+}
+.Backspace, .CapsLock, .ShiftLeft, .ShiftRight{
+    width: 10*$spacer;
+}
+.ShiftRight, .Enter{
+    width: 8*$spacer;
+}
+.Space{
+    flex-grow: 1;
+}
+.Backspace, .CapsLock, .Alt, .Shift, .Enter, .Tab, .Control, .MetaLeft, .ArrowUp, .ArrowDown, .ArrowLeft, .ArrowUp, .ArrowRight{
+    background: $color-keyboard;
+}
+.hidden {
+    display: none;
+}
+.active {
+    background: $color-key-hover*1.3;
+    border-radius: $spacer*2;
+}
