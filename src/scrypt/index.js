@@ -192,24 +192,86 @@ for(let i = 0; i < content.length; i+=8) {
 }
 addChild(description)
 addChild(language)
+
+
+
+
 let i = 0
 let arr = [
     [0, 1, 2, 3],
     [4, 5, 6, 7]
 ]
-let lang = 1
+let lang;
+if (localStorage.getItem("lang") === null) {
+    localStorage.setItem('lang', '0')
+    // lang = 0
+  }
+if (lang === 'undefined') {
+    switchLang(0);
+    lang = Number(localStorage.getItem('lang'))
+}
+// console.log(Number(localStorage.getItem('lang')))
+// localStorage.setItem('lang', lang.toString())
+// localStorage.getItem('lang')
+// console.log(Number(localStorage.getItem('lang'))+1)
 let isUp = 0
-let index = arr[lang][isUp]
+let index = arr[Number(localStorage.getItem('lang'))][isUp]
 
+switchLang(arr[Number(localStorage.getItem('lang'))][isUp]);
+console.log('lang first', lang)
 
+let keyScreen;
+// let keysPressed = {};
 let keysPressed = {};
+document.addEventListener('mousedown', function (event){
+    keyScreen = (event.path[0].classList.item(1));
+    if(keyScreen !== null){
+
+        if (keyScreen.indexOf('-')) {
+            let i = keyScreen.indexOf('-')
+            keyScreen = keyScreen.slice(i+1)
+        }
+        if (keyScreen !== 'row1' && keyScreen !== 'row2' && keyScreen !== 'row3' && keyScreen !== 'row4' && keyScreen !== 'row5') {
+
+            // console.log('mousedown', keyScreen)
+            keysPressed[keyScreen] = true;
+            event.preventDefault();
+            if (keysPressed['ShiftLeft'] && keyScreen == 'AltLeft' || keysPressed['AltLeft'] && keyScreen == 'ShiftLeft') {
+                lang = Number(localStorage.getItem('lang'))
+                lang++;
+                lang %= 2;
+                localStorage.setItem('lang', lang.toString())
+                console.log(`lang is ${lang === 1 ? "rus" : "eng"}`, localStorage.getItem('lang'))
+                
+            }
+            let caps = document.getElementsByClassName('CapsLock')[0];
+            if (keyScreen === 'CapsLock' || caps.matches('.active')) {
+                isUp = 2;
+                if (keysPressed['ShiftLeft'] || keysPressed['ShiftRight']) {
+                    isUp = 3
+                }
+            }
+            if (keyScreen === 'ShiftLeft' || keyScreen === 'ShiftRight') {
+                isUp = 1;
+            }
+            addSymbolFromKey(event.key, keyScreen, arr[Number(localStorage.getItem('lang'))][isUp]);
+            switchLang(arr[Number(localStorage.getItem('lang'))][isUp]);
+            displayKeyByPhysicalKeyboard(keyScreen);
+            displaySymbol(keyScreen, arr[Number(localStorage.getItem('lang'))][isUp]);
+        }
+    }
+
+})
 document.addEventListener('keydown', function (event){
     keysPressed[event.code] = true;
     event.preventDefault();
     // console.log('index in main =', lang, isUp)
     if (keysPressed['ShiftLeft'] && event.code == 'AltLeft' || keysPressed['AltLeft'] && event.code == 'ShiftLeft') {
+        lang = Number(localStorage.getItem('lang'));
         lang++;
         lang %= 2;
+        localStorage.setItem('lang', lang.toString())
+        console.log(`lang is ${lang === 1 ? "rus" : "eng"}`, localStorage.getItem('lang'))
         // console.log(`lang is ${lang === 1 ? "rus" : "eng"}`)
     }
     let caps = document.getElementsByClassName('CapsLock')[0];
@@ -223,11 +285,12 @@ document.addEventListener('keydown', function (event){
     if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
         isUp = 1;
     }
-    addSymbolFromKey(event.key, event.code, arr[lang][isUp]);
-    switchLang(event.code, arr[lang][isUp]);
+    addSymbolFromKey(event.key, event.code, arr[Number(localStorage.getItem('lang'))][isUp]);
+    switchLang(arr[Number(localStorage.getItem('lang'))][isUp]);
     displayKeyByPhysicalKeyboard(event.code);
-    displaySymbol(event.code, arr[lang][isUp]);
+    displaySymbol(event.code, arr[Number(localStorage.getItem('lang'))][isUp]);
 
+    console.log('lang', lang)
 })
 
 document.addEventListener('keyup', function (event){
@@ -245,11 +308,38 @@ document.addEventListener('keyup', function (event){
     }
     delete keysPressed[event.code];
     hideKeyByPhysicalKeyboard(event.code);
-    displaySymbol(event.code, arr[lang][isUp]);
-    console.log(`Input lang is ${lang === 0 ? "Russian" : "English"}`,
-                '\n----------------------------------------',
-                `\nkeyboard>keyboard-row>key>${lang === 0 ? "rus" : "eng"} child No ${arr[lang][isUp]%4}`);
+    displaySymbol(event.code, arr[Number(localStorage.getItem('lang'))][isUp]);
+    // console.log(`Input lang is ${lang === 0 ? "Russian" : "English"}`,
+    //             '\n----------------------------------------',
+    //             `\nkeyboard>keyboard-row>key>${lang === 0 ? "rus" : "eng"} child No ${arr[lang][isUp]%4}`);
     
 })
 
+document.addEventListener('mouseup', function (event) {
+    keyScreen = (event.path[0].classList.item(1));
+    if(keyScreen !== null){
 
+        if (keyScreen.indexOf('-')) {
+            let i = keyScreen.indexOf('-')
+            keyScreen = keyScreen.slice(i+1)
+        }
+        if (keyScreen === 'ShiftLeft' || keyScreen === 'ShiftRight') {
+            isUp = 0;
+        }
+        if (keyScreen === 'ShiftLeft' || keyScreen === 'ShiftRight') {
+            isUp = 0;
+        }
+        let caps = document.getElementsByClassName('CapsLock')[0];
+        // if (keyScreen === 'CapsLock' || caps.matches('.active')) {
+        //     if (keysPressed['ShiftLeft'] || keysPressed['ShiftRight']) {
+        //         isUp = 3
+        //     }
+        // }
+        delete keysPressed[keyScreen];
+        hideKeyByPhysicalKeyboard(keyScreen);
+        // displaySymbolTouch(keyScreen, arr[lang][isUp]);
+        // console.log(`Input lang is ${lang === 0 ? "Russian" : "English"}`,
+        //             '\n----------------------------------------',
+        //             `\nkeyboard>keyboard-row>key>${lang === 0 ? "rus" : "eng"} child No ${arr[lang][isUp]%4}`);
+    }
+})
