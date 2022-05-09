@@ -218,7 +218,7 @@ let isUp = 0
 let index = arr[Number(localStorage.getItem('lang'))][isUp]
 
 switchLang(arr[Number(localStorage.getItem('lang'))][isUp]);
-console.log('lang first', lang)
+// console.log('lang first', lang)
 
 let keyScreen;
 // let keysPressed = {};
@@ -241,7 +241,7 @@ document.addEventListener('mousedown', function (event){
                 lang++;
                 lang %= 2;
                 localStorage.setItem('lang', lang.toString())
-                console.log(`lang is ${lang === 1 ? "rus" : "eng"}`, localStorage.getItem('lang'))
+                // console.log(`lang is ${lang === 1 ? "rus" : "eng"}`, localStorage.getItem('lang'))
                 
             }
             let caps = document.getElementsByClassName('CapsLock')[0];
@@ -271,7 +271,7 @@ document.addEventListener('keydown', function (event){
         lang++;
         lang %= 2;
         localStorage.setItem('lang', lang.toString())
-        console.log(`lang is ${lang === 1 ? "rus" : "eng"}`, localStorage.getItem('lang'))
+        // console.log(`lang is ${lang === 1 ? "rus" : "eng"}`, localStorage.getItem('lang'))
         // console.log(`lang is ${lang === 1 ? "rus" : "eng"}`)
     }
     let caps = document.getElementsByClassName('CapsLock')[0];
@@ -290,7 +290,7 @@ document.addEventListener('keydown', function (event){
     displayKeyByPhysicalKeyboard(event.code);
     displaySymbol(event.code, arr[Number(localStorage.getItem('lang'))][isUp]);
 
-    console.log('lang', lang)
+    // console.log('lang', lang)
 })
 
 document.addEventListener('keyup', function (event){
