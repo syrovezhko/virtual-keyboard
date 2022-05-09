@@ -10,11 +10,11 @@ container()
 addChild(title)
 addChild(inputBlockRow)
 addChild(keyboardBody)
-for(let i = 0; i < content.length; i+=4) {
+for(let i = 0; i < content.length; i+=8) {
     let keyboardRow = {
         parent: 'keyboard',
         tag: 'div',
-        class: `keyboard-row row${i/4 + 1}`,
+        class: `keyboard-row row${i/8 + 1}`,
         content: ''
     };
     addChild(keyboardRow);
@@ -102,16 +102,16 @@ for(let i = 0; i < content.length; i+=4) {
             }
         }
         let key = {
-            parent: `row${i/4 + 1}`,
+            parent: `row${i/8 + 1}`,
             tag: 'div',
             class: `key ${keyClass}`,
             content: ''
         };
-        if (j === 0 && i === 12 || j === 0 && i === 16 || j === 2 && i === 16) {
+        if (j === 0 && i === 24 || j === 0 && i === 32 || j === 2 && i === 32) {
             keyClass = `${keyClass}Left`
             key.class += ' ' + keyClass;
         };
-        if (i === 12 && j === content[i].length-1 || j === content[i].length-1 && i === 16 || j === content[i].length-5 && i === 16) {
+        if (i === 24 && j === content[i].length-1 || j === content[i].length-1 && i === 32 || j === content[i].length-5 && i === 32) {
             keyClass = `${keyClass}Right`
             key.class += ' ' + keyClass;
         }
@@ -134,25 +134,25 @@ for(let i = 0; i < content.length; i+=4) {
             parent: `rus-${keyClass}`,
             tag: 'span',
             class: `caseDown caseDown-${keyClass}`,
-            content: content[i+2][j]
+            content: content[i+4][j]
         }
         let caseUpRus = {
             parent: `rus-${keyClass}`,
             tag: 'span',
             class: `caseUp caseUp-${keyClass} hidden`,
-            content: content[i+3][j]
+            content: content[i+5][j]
         }
         let capsRus = {
             parent: `rus-${keyClass}`,
             tag: 'span',
             class: `caps caps-${keyClass} hidden`,
-            content: content[i+2][j].toUpperCase()
+            content: content[i+6][j]
         }
         let shiftCapsRus = {
             parent: `rus-${keyClass}`,
             tag: 'span',
             class: `shiftCaps shiftCaps-${keyClass} hidden`,
-            content: content[i+3][j].toLowerCase()
+            content: content[i+7][j]
         }
 
 
@@ -172,13 +172,13 @@ for(let i = 0; i < content.length; i+=4) {
             parent: `eng-${keyClass}`,
             tag: 'span',
             class: `caps caps-${keyClass} hidden`,
-            content: content[i][j].toUpperCase()
+            content: content[i+2][j]
         }
         let shiftCapsEng = {
             parent: `eng-${keyClass}`,
             tag: 'span',
             class: `shiftCaps shiftCaps-${keyClass} hidden`,
-            content: content[i+1][j]
+            content: content[i+3][j]
         }
         addChild(caseDownRus)
         addChild(caseDownEng)
@@ -212,38 +212,43 @@ document.addEventListener('keydown', function (event){
         lang %= 2;
         // console.log(`lang is ${lang === 1 ? "rus" : "eng"}`)
     }
-    if (event.code === 'CapsLock') {
-        console.log('CapsLock')
-        let caps = document.getElementsByClassName('CapsLock')[0];
-        if (!caps.matches('.active')) {
-            // console.log('CapsLock active')
-            isUp = 2;
-        } 
-        else {
-            // console.log('CapsLock passive')
-            isUp = 0
+    let caps = document.getElementsByClassName('CapsLock')[0];
+    if (event.code === 'CapsLock' || caps.matches('.active')) {
+        // console.log('CapsLock')
+        isUp = 2;
+        if (keysPressed['ShiftLeft'] || keysPressed['ShiftRight']) {
+            isUp = 3
         }
     }
     if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
-        isUp++;
-        isUp %= 2;
+        isUp = 1;
     }
     addSymbolFromKey(event.key, event.code, arr[lang][isUp]);
-    displayKeyByPhysicalKeyboard(event.code);
     switchLang(event.code, arr[lang][isUp]);
-    console.log(arr[lang][isUp]);
+    displayKeyByPhysicalKeyboard(event.code);
     displaySymbol(event.code, arr[lang][isUp]);
 
 })
 
 document.addEventListener('keyup', function (event){
     if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
-        isUp++;
-        isUp %= 2;
+        isUp = 0;
     }
-    displaySymbol(event.code, arr[lang][isUp]);
+    if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+        isUp = 0;
+    }
+    let caps = document.getElementsByClassName('CapsLock')[0];
+    if (event.code === 'CapsLock' || caps.matches('.active')) {
+        if (keysPressed['ShiftLeft'] || keysPressed['ShiftRight']) {
+            isUp = 3
+        }
+    }
     delete keysPressed[event.code];
     hideKeyByPhysicalKeyboard(event.code);
+    displaySymbol(event.code, arr[lang][isUp]);
+    console.log(`Input lang is ${lang === 0 ? "Russian" : "English"}`,
+                '\n----------------------------------------',
+                `\nkeyboard>keyboard-row>key>${lang === 0 ? "rus" : "eng"} child No ${arr[lang][isUp]%4}`);
     
 })
 
