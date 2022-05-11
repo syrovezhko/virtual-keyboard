@@ -264,6 +264,8 @@ document.addEventListener('keydown', function (event){
         if (keysPressed['ShiftLeft'] || keysPressed['ShiftRight']) {
             isUp = 3
         }
+    } else {
+        isUp = 0;
     }
     if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
         isUp = 1;
@@ -288,9 +290,10 @@ document.addEventListener('keyup', function (event){
             isUp = 3
         }
     }
-    delete keysPressed[event.code];
+    // delete keysPressed[event.code];
     hideKeyByPhysicalKeyboard(event.code);
     displaySymbol(event.code, arr[Number(localStorage.getItem('lang'))][isUp]);
+    delete keysPressed[event.code];
     // console.log(`Input lang is ${lang === 0 ? "Russian" : "English"}`,
     //             '\n----------------------------------------',
     //             `\nkeyboard>keyboard-row>key>${lang === 0 ? "rus" : "eng"} child No ${arr[lang][isUp]%4}`);
