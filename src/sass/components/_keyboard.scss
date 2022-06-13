@@ -1,0 +1,20 @@
+.keyboard {
+    width: 71*$spacer;
+    margin: 0 auto;
+    padding: 0.5*$spacer;
+    padding-left: 0;
+    padding-bottom: 0;
+    background: $color-keyboard*4;
+    border: 0.3*$spacer solid $color-keyboard;
+    border-radius: 0.5*$spacer;
+    &-row {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        clear: both;
+        width: 100%;
+        height: 4*$spacer;
+        margin-bottom: 0.8*$spacer;
+
+    }
+}
